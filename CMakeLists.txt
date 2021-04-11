@@ -32,8 +32,8 @@ endif()
 target_include_directories(imgui
 	PUBLIC
 		${CMAKE_CURRENT_SOURCE_DIR}
-	PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/examples
+	PRIVATE
 		${OPENGL_INCLUDE_DIR}
 		${GLEW_INCLUDE_DIRS}
 )
