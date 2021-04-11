@@ -30,8 +30,9 @@ elseif(UNIX)
 endif()
 
 target_include_directories(imgui
-	PRIVATE
+	PUBLIC
 		${CMAKE_CURRENT_SOURCE_DIR}
+	PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/examples
 		${OPENGL_INCLUDE_DIR}
 		${GLEW_INCLUDE_DIRS}
