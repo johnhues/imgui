@@ -32,7 +32,7 @@ endif()
 target_include_directories(imgui
 	PUBLIC
 		${CMAKE_CURRENT_SOURCE_DIR}
-		${CMAKE_CURRENT_SOURCE_DIR}/examples
+		${CMAKE_CURRENT_SOURCE_DIR}/backends
 	PRIVATE
 		${OPENGL_INCLUDE_DIR}
 		${GLEW_INCLUDE_DIRS}
@@ -44,7 +44,7 @@ target_sources(imgui
 		imgui_demo.cpp
 		imgui_draw.cpp
 		imgui_widgets.cpp
-		examples/imgui_impl_opengl3.cpp
+		backends/imgui_impl_opengl3.cpp
 	INTERFACE
 		${CMAKE_CURRENT_SOURCE_DIR}/imgui.h
 )
