@@ -47,4 +47,5 @@ target_sources(imgui
 		backends/imgui_impl_opengl3.cpp
 	INTERFACE
 		${CMAKE_CURRENT_SOURCE_DIR}/imgui.h
+		${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_opengl3.h
 )
