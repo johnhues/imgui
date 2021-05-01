@@ -1418,7 +1418,6 @@ Breaking Changes:
 - Renamed ImFontAtlas::GlyphRangesBuilder to ImFontGlyphRangesBuilder. Kept redirection typedef (will obsolete).
 
 Other Changes:
-
 - Added BETA api for Tab Bar/Tabs widgets: (#261, #351)
   - Added BeginTabBar(), EndTabBar(), BeginTabItem(), EndTabItem(), SetTabItemClosed() API.
   - Added ImGuiTabBarFlags flags for BeginTabBar().
