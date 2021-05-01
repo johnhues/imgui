@@ -1,11 +1,12 @@
-// dear imgui: standalone example application for SDL2 + Vulkan
-// If you are new to dear imgui, see examples/README.txt and documentation at the top of imgui.cpp.
+// Dear ImGui: standalone example application for SDL2 + Vulkan
+// If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
+// Read online: https://github.com/ocornut/imgui/tree/master/docs
 
 // Important note to the reader who wish to integrate imgui_impl_vulkan.cpp/.h in their own engine/app.
 // - Common ImGui_ImplVulkan_XXX functions and structures are used to interface with imgui_impl_vulkan.cpp/.h.
-//   You will use those if you want to use this rendering back-end in your engine/app.
+//   You will use those if you want to use this rendering backend in your engine/app.
 // - Helper ImGui_ImplVulkanH_XXX functions and structures are only used by this example (main.cpp) and by
-//   the back-end itself (imgui_impl_vulkan.cpp), but should PROBABLY NOT be used by your own engine/app code.
+//   the backend itself (imgui_impl_vulkan.cpp), but should PROBABLY NOT be used by your own engine/app code.
 // Read comments in imgui_impl_vulkan.h.
 
 #include "imgui.h"
@@ -113,10 +114,22 @@ static void SetupVulkan(const char** extensions, uint32_t extensions_count)
         err = vkEnumeratePhysicalDevices(g_Instance, &gpu_count, gpus);
         check_vk_result(err);
 
-        // If a number >1 of GPUs got reported, you should find the best fit GPU for your purpose
-        // e.g. VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU if available, or with the greatest memory available, etc.
-        // for sake of simplicity we'll just take the first one, assuming it has a graphics queue family.
-        g_PhysicalDevice = gpus[0];
+        // If a number >1 of GPUs got reported, find discrete GPU if present, or use first one available. This covers
+        // most common cases (multi-gpu/integrated+dedicated graphics). Handling more complicated setups (multiple
+        // dedicated GPUs) is out of scope of this sample.
+        int use_gpu = 0;
+        for (int i = 0; i < (int)gpu_count; i++)
+        {
+            VkPhysicalDeviceProperties properties;
+            vkGetPhysicalDeviceProperties(gpus[i], &properties);
+            if (properties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
+            {
+                use_gpu = i;
+                break;
+            }
+        }
+
+        g_PhysicalDevice = gpus[use_gpu];
         free(gpus);
     }
 
@@ -244,7 +257,7 @@ static void FrameRender(ImGui_ImplVulkanH_Window* wd, ImDrawData* draw_data)
     VkSemaphore image_acquired_semaphore  = wd->FrameSemaphores[wd->SemaphoreIndex].ImageAcquiredSemaphore;
     VkSemaphore render_complete_semaphore = wd->FrameSemaphores[wd->SemaphoreIndex].RenderCompleteSemaphore;
     err = vkAcquireNextImageKHR(g_Device, wd->Swapchain, UINT64_MAX, image_acquired_semaphore, VK_NULL_HANDLE, &wd->FrameIndex);
-    if (err == VK_ERROR_OUT_OF_DATE_KHR)
+    if (err == VK_ERROR_OUT_OF_DATE_KHR || err == VK_SUBOPTIMAL_KHR)
     {
         g_SwapChainRebuild = true;
         return;
@@ -317,7 +330,7 @@ static void FramePresent(ImGui_ImplVulkanH_Window* wd)
     info.pSwapchains = &wd->Swapchain;
     info.pImageIndices = &wd->FrameIndex;
     VkResult err = vkQueuePresentKHR(g_Queue, &info);
-    if (err == VK_ERROR_OUT_OF_DATE_KHR)
+    if (err == VK_ERROR_OUT_OF_DATE_KHR || err == VK_SUBOPTIMAL_KHR)
     {
         g_SwapChainRebuild = true;
         return;
@@ -377,6 +390,7 @@ int main(int, char**)
     ImGui::StyleColorsDark();
     //ImGui::StyleColorsClassic();
 
+<<<<<<< HEAD
     // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
     ImGuiStyle& style = ImGui::GetStyle();
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -386,6 +400,9 @@ int main(int, char**)
     }
 
     // Setup Platform/Renderer bindings
+=======
+    // Setup Platform/Renderer backends
+>>>>>>> master
     ImGui_ImplSDL2_InitForVulkan(window);
     ImGui_ImplVulkan_InitInfo init_info = {};
     init_info.Instance = g_Instance;
@@ -537,8 +554,17 @@ int main(int, char**)
         // Update and Render additional Platform Windows
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
+<<<<<<< HEAD
             ImGui::UpdatePlatformWindows();
             ImGui::RenderPlatformWindowsDefault();
+=======
+            wd->ClearValue.color.float32[0] = clear_color.x * clear_color.w;
+            wd->ClearValue.color.float32[1] = clear_color.y * clear_color.w;
+            wd->ClearValue.color.float32[2] = clear_color.z * clear_color.w;
+            wd->ClearValue.color.float32[3] = clear_color.w;
+            FrameRender(wd, draw_data);
+            FramePresent(wd);
+>>>>>>> master
         }
 
         // Present Main Platform Window

@@ -1,12 +1,9 @@
------------------------------------------------------------------------
- dear imgui, v1.79
------------------------------------------------------------------------
- examples/README.txt
- (This is the README file for the examples/ folder. See docs/ for more documentation)
------------------------------------------------------------------------
+See BACKENDS and EXAMPLES files in the docs/ folder.
 
-Dear ImGui is highly portable and only requires a few things to run and render:
+Backends = Helper code to facilitate integration with platforms/graphics api (used by Examples + should be used by your app).
+Examples = Standalone applications showcasing integration with platforms/graphics api.
 
+<<<<<<< HEAD
  - Providing mouse/keyboard inputs
  - Uploading the font atlas texture into graphics memory
  - Providing a render function to render indexed textured triangles
@@ -297,3 +294,7 @@ example_win32_directx12/
     DirectX12 example, Windows only.
     = main.cpp + imgui_impl_win32.cpp + imgui_impl_dx12.cpp
     This is quite long and tedious, because: DirectX12.
+=======
+Once Dear ImGui is running (in either examples or your own application/game/engine),
+run and refer to ImGui::ShowDemoWindow() in imgui_demo.cpp for the end-user API.
+>>>>>>> master
