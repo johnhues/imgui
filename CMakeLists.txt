@@ -43,6 +43,7 @@ target_sources(imgui
 		imgui.cpp
 		imgui_demo.cpp
 		imgui_draw.cpp
+		imgui_tables.cpp
 		imgui_widgets.cpp
 		backends/imgui_impl_opengl3.cpp
 	INTERFACE
