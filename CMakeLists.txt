@@ -10,7 +10,7 @@ add_definitions(-D_UNICODE -DUNICODE)
 find_package(OpenGL REQUIRED)
 
 if(WIN32 AND NOT CYGWIN)
-	ExternalProject_Add(glew
+	ExternalProject_Add(glew_inc
 		PREFIX glew
 		URL https://github.com/nigels-com/glew/releases/download/glew-2.1.0/glew-2.1.0-win32.zip
 		CONFIGURE_COMMAND ""
