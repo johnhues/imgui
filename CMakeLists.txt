@@ -11,16 +11,20 @@ find_package(OpenGL REQUIRED)
 
 if(WIN32 AND NOT CYGWIN)
 	ExternalProject_Add(glew_inc
-		PREFIX glew
+		PREFIX glew_inc
 		URL https://github.com/nigels-com/glew/releases/download/glew-2.1.0/glew-2.1.0-win32.zip
 		CONFIGURE_COMMAND ""
 		BUILD_COMMAND ""
 		INSTALL_COMMAND ""
 	)
-	set(GLEW_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/glew/src/glew/include)
+	set(GLEW_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/glew_inc/src/glew_inc/include)
 endif()
 
 add_library(imgui)
+add_dependencies(imgui
+	glew_inc
+)
+
 if(WIN32 AND NOT CYGWIN)
 	add_definitions(-DIMGUI_IMPL_OPENGL_LOADER_GLEW)
 elseif(APPLE)
