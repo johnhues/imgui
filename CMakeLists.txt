@@ -18,12 +18,13 @@ if(WIN32 AND NOT CYGWIN)
 		INSTALL_COMMAND ""
 	)
 	set(GLEW_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/glew_inc/src/glew_inc/include)
+    list(APPEND DEPS_TARGETS glew_inc)
 endif()
 
 add_library(imgui)
-add_dependencies(imgui
-	glew_inc
-)
+if(${DEPS_TARGETS})
+	add_dependencies(imgui ${DEPS_TARGETS})
+endif()
 
 if(WIN32 AND NOT CYGWIN)
 	add_definitions(-DIMGUI_IMPL_OPENGL_LOADER_GLEW)
