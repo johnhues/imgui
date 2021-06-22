@@ -10,15 +10,13 @@ add_definitions(-D_UNICODE -DUNICODE)
 find_package(OpenGL REQUIRED)
 
 if(WIN32 AND NOT CYGWIN)
-	ExternalProject_Add(glew_inc
-		PREFIX glew_inc
+	FetchContent_Declare(
+		glew_inc
 		URL https://github.com/nigels-com/glew/releases/download/glew-2.1.0/glew-2.1.0-win32.zip
-		CONFIGURE_COMMAND ""
-		BUILD_COMMAND ""
-		INSTALL_COMMAND ""
 	)
-	set(GLEW_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/glew_inc/src/glew_inc/include)
-    list(APPEND DEPS_TARGETS glew_inc)
+	FetchContent_MakeAvailable(glew_inc)
+	FetchContent_GetProperties(glew_inc SOURCE_DIR glew_inc_SOURCE_DIR)
+	set(GLEW_INCLUDE_DIRS ${glew_inc_SOURCE_DIR}/include)
 endif()
 
 add_library(imgui)
